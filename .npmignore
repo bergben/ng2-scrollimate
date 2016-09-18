@@ -36,10 +36,9 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-# Generated #
-*.js
-!karma.conf.js
-!karma-test-shim.js
-*.map
-*.d.ts
-typings
+# Dev #
+*.ts
+!*.d.ts
+tests
+karma.conf.js
+karma-test-shim.js
