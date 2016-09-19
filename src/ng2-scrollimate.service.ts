@@ -4,6 +4,9 @@ import { State } from'./ng2-scrollimate.interface';
 @Injectable()
 export class ScrollimateService {
     private _defaultStates: State[];
+    constructor() {
+        this._defaultStates=[];
+    }
     getDefaultStates(): State[] {
         return this._defaultStates;
     }
