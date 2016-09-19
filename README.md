@@ -70,6 +70,7 @@ export class MyComponent {
           ]
       },
   }
+}
 ```
 
 ### Template
