@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Renderer, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ScrollimateService } from './ng2-scrollimate.service.ts';
-import { State, Options } from'./ng2-scrollimate.interface.ts';
+import { ScrollimateService } from './ng2-scrollimate.service';
+import { State, Options } from'./ng2-scrollimate.interface';
 
 @Directive({
     selector: '[scrollimate]'

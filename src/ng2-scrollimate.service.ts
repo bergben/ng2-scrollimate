@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { State } from'./ng2-scrollimate.interface.ts';
+import { State } from'./ng2-scrollimate.interface';
 
 @Injectable()
 export class ScrollimateService {
