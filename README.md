@@ -169,7 +169,7 @@ default states don't have a value because they are always true and used as a fal
 
 ### Set state at last chance
 For methods like pxLeft or percentLeft it might unintentionally happen that an element will never reach the breakpoint for example if the element is positionend at the very bottom of the page. That's what "setAtLastChance" is for. 
-**This option is true by default.** You can deactivate it using:
+**This option is true by default. Setting it to false is particularly important for fixed elements.** You can deactivate it using:
 ```TypeScript
     setAtLastChance: false
 ```
