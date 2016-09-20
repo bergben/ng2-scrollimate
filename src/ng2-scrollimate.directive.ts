@@ -1,29 +1,26 @@
-import { ChangeDetectorRef, AfterViewInit, Directive, ElementRef, Renderer, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, Renderer, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import { ScrollimateService } from './ng2-scrollimate.service';
 import { State, Options } from'./ng2-scrollimate.interface';
 
 @Directive({
     selector: '[scrollimate]'
 })
-export class ScrollimateDirective implements OnInit, AfterViewInit {
+export class ScrollimateDirective implements AfterViewInit {
 
     @Input('scrollimate') options: Options;
     @Output('scrollimate') output = new EventEmitter();
     @Output('scrollimateAll') outputStats = new EventEmitter();
     classNameSetByScrollimate: string = '';
 
-    constructor(private el: ElementRef, private renderer: Renderer,
-        private scrollimateService: ScrollimateService,
-        private _changeDetectionRef: ChangeDetectorRef) {
+    constructor(private el: ElementRef, private renderer: Renderer, private scrollimateService: ScrollimateService) {
         //add listeneres for scroll and resize
         this.renderer.listenGlobal('window', 'scroll', (evt: Event) => { this._processEvent(); });
         this.renderer.listenGlobal('window', 'resize', (evt: Event) => { this._processEvent(); });
     }
-    ngOnInit() {
-        this._processEvent();
-    }
     ngAfterViewInit(): void {
-        this._changeDetectionRef.detectChanges();
+          setInterval(() => {
+            this._processEvent();
+          }, 0);
     }
 
 
@@ -255,7 +252,7 @@ export class ScrollimateDirective implements OnInit, AfterViewInit {
                 currentValue = hasToBeSmallerThan + state.value - hasToBeBiggerThan;
             }
             if (state.method === 'pxElement') {
-                currentValue = hasToBeBiggerThan - hasToBeSmallerThan;
+                currentValue = hasToBeBiggerThan - hasToBeSmallerThan + state.value;
             }
         }
         this.outputStats.emit({

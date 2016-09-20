@@ -11,12 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var ng2_scrollimate_service_1 = require('./ng2-scrollimate.service');
 var ScrollimateDirective = (function () {
-    function ScrollimateDirective(el, renderer, scrollimateService, _changeDetectionRef) {
+    function ScrollimateDirective(el, renderer, scrollimateService) {
         var _this = this;
         this.el = el;
         this.renderer = renderer;
         this.scrollimateService = scrollimateService;
-        this._changeDetectionRef = _changeDetectionRef;
         this.output = new core_1.EventEmitter();
         this.outputStats = new core_1.EventEmitter();
         this.classNameSetByScrollimate = '';
@@ -24,11 +23,11 @@ var ScrollimateDirective = (function () {
         this.renderer.listenGlobal('window', 'scroll', function (evt) { _this._processEvent(); });
         this.renderer.listenGlobal('window', 'resize', function (evt) { _this._processEvent(); });
     }
-    ScrollimateDirective.prototype.ngOnInit = function () {
-        this._processEvent();
-    };
     ScrollimateDirective.prototype.ngAfterViewInit = function () {
-        this._changeDetectionRef.detectChanges();
+        var _this = this;
+        setInterval(function () {
+            _this._processEvent();
+        }, 0);
     };
     ScrollimateDirective.prototype._processEvent = function () {
         if (!this.options || typeof (this.options) === 'string' || typeof (this.options) === 'number') {
@@ -257,7 +256,7 @@ var ScrollimateDirective = (function () {
                 currentValue = hasToBeSmallerThan + state.value - hasToBeBiggerThan;
             }
             if (state.method === 'pxElement') {
-                currentValue = hasToBeBiggerThan - hasToBeSmallerThan;
+                currentValue = hasToBeBiggerThan - hasToBeSmallerThan + state.value;
             }
         }
         this.outputStats.emit({
@@ -401,7 +400,7 @@ var ScrollimateDirective = (function () {
         core_1.Directive({
             selector: '[scrollimate]'
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer, ng2_scrollimate_service_1.ScrollimateService, core_1.ChangeDetectorRef])
+        __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer, ng2_scrollimate_service_1.ScrollimateService])
     ], ScrollimateDirective);
     return ScrollimateDirective;
 }());
