@@ -1,28 +1,32 @@
-import { Directive, ElementRef, Renderer, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ScrollimateService } from './ng2-scrollimate.service';
-import { State, Options } from'./ng2-scrollimate.interface';
-
-@Directive({
-    selector: '[scrollimate]'
-})
-export class ScrollimateDirective implements OnInit {
-
-    @Input('scrollimate') options: Options;
-    @Output('scrollimate') output = new EventEmitter();
-    @Output('scrollimateAll') outputStats = new EventEmitter();
-    classNameSetByScrollimate: string = '';
-
-    constructor(private el: ElementRef, private renderer: Renderer, private scrollimateService: ScrollimateService) {
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var ng2_scrollimate_service_1 = require('./ng2-scrollimate.service');
+var ScrollimateDirective = (function () {
+    function ScrollimateDirective(el, renderer, scrollimateService) {
+        var _this = this;
+        this.el = el;
+        this.renderer = renderer;
+        this.scrollimateService = scrollimateService;
+        this.output = new core_1.EventEmitter();
+        this.outputStats = new core_1.EventEmitter();
+        this.classNameSetByScrollimate = '';
         //add listeneres for scroll and resize
-        this.renderer.listenGlobal('window', 'scroll', (evt: Event) => { this._processEvent(); });
-        this.renderer.listenGlobal('window', 'resize', (evt: Event) => { this._processEvent(); });
+        this.renderer.listenGlobal('window', 'scroll', function (evt) { _this._processEvent(); });
+        this.renderer.listenGlobal('window', 'resize', function (evt) { _this._processEvent(); });
     }
-    ngOnInit() {
+    ScrollimateDirective.prototype.ngOnInit = function () {
         this._processEvent();
-    }
-
-
-    private _processEvent() {
+    };
+    ScrollimateDirective.prototype._processEvent = function () {
         if (!this.options || typeof (this.options) === 'string' || typeof (this.options) === 'number') {
             //no options or incorrect options provided -> proceed with default states
             console.warn('Scrollimate:', 'Invalid options provided:', this.options);
@@ -32,11 +36,12 @@ export class ScrollimateDirective implements OnInit {
                 this._applyDefaultStates();
             }
             else {
-                let stateApplied: boolean = false;
-                for (let i = 0; !stateApplied && i < this.options.states.length; i++) {
+                var stateApplied = false;
+                for (var i = 0; !stateApplied && i < this.options.states.length; i++) {
                     if (this._processState(this.options.states[i])) {
                         stateApplied = true;
-                    };
+                    }
+                    ;
                 }
                 if (!stateApplied) {
                     //no state matched -> proceed with default states
@@ -44,21 +49,22 @@ export class ScrollimateDirective implements OnInit {
                 }
             }
         }
-    }
-    private _applyDefaultStates() {
-        let stateApplied: boolean = false;
-        let defaultStates = this.scrollimateService.getDefaultStates();
-        for (let i = 0; !stateApplied && i < defaultStates.length; i++) {
+    };
+    ScrollimateDirective.prototype._applyDefaultStates = function () {
+        var stateApplied = false;
+        var defaultStates = this.scrollimateService.getDefaultStates();
+        for (var i = 0; !stateApplied && i < defaultStates.length; i++) {
             if (this._processState(defaultStates[i])) {
                 stateApplied = true;
-            };
+            }
+            ;
         }
         if (!stateApplied) {
             //no state matched at all
             console.warn('Scrollimate:', 'No state matched current scroll position, please provide a default state!');
         }
-    }
-    private _processState(state: State): boolean {
+    };
+    ScrollimateDirective.prototype._processState = function (state) {
         //check for valid values
         if (this._isValidState(state)) {
             //state is valid
@@ -84,16 +90,16 @@ export class ScrollimateDirective implements OnInit {
             }
         }
         return false;
-    }
-    private _setValuesOrDefault(state: State): State {
+    };
+    ScrollimateDirective.prototype._setValuesOrDefault = function (state) {
         state.state = state.state || 'inactive';
         state.sizes = state.sizes || 'all';
         state.setAtLastChance = typeof (state.setAtLastChance) === 'boolean' ? state.setAtLastChance : true;
         state.setAtLastChanceTopPx = state.setAtLastChanceTopPx || 10;
         state.setAtLastChanceBottomPx = state.setAtLastChanceBottomPx || 10;
         return state;
-    }
-    private _isValidState(state: State): boolean {
+    };
+    ScrollimateDirective.prototype._isValidState = function (state) {
         if (typeof (state.method) === 'undefined') {
             console.warn('Scrollimate:', 'No method was provided for a state but is required.');
             return false;
@@ -127,100 +133,99 @@ export class ScrollimateDirective implements OnInit {
             return false;
         }
         return true;
-    }
-
-    private _pxLeft(state: State): boolean {
+    };
+    ScrollimateDirective.prototype._pxLeft = function (state) {
         //how much left before top of element is out of viewpoint in px
         if (this._isCurrentScreenSize(state.sizes)) {
-            let nativeElement = this.el.nativeElement;
-            let scrollTop = window.pageYOffset;
-            let offsetElement = nativeElement;
-            let elementOffsetTop = 0;
+            var nativeElement = this.el.nativeElement;
+            var scrollTop = window.pageYOffset;
+            var offsetElement = nativeElement;
+            var elementOffsetTop = 0;
             while (offsetElement) {
                 elementOffsetTop += offsetElement.offsetTop;
                 offsetElement = offsetElement.offsetParent;
             }
-            let breakpoint = elementOffsetTop + state.value;
+            var breakpoint = elementOffsetTop + state.value;
             return this._setElementState(scrollTop, breakpoint, state);
         }
         return false;
-    }
-    private _percentLeft(state: State): boolean {
+    };
+    ScrollimateDirective.prototype._percentLeft = function (state) {
         //how much left in percentage of window height before top of element reaches viewpoint
         if (this._isCurrentScreenSize(state.sizes)) {
-            let nativeElement = this.el.nativeElement;
-            let scrollTop = window.pageYOffset;
-            let windowHeight = window.innerHeight;
-            let offsetElement = nativeElement;
-            let elementOffsetTop = 0;
+            var nativeElement = this.el.nativeElement;
+            var scrollTop = window.pageYOffset;
+            var windowHeight = window.innerHeight;
+            var offsetElement = nativeElement;
+            var elementOffsetTop = 0;
             while (offsetElement) {
                 elementOffsetTop += offsetElement.offsetTop;
                 offsetElement = offsetElement.offsetParent;
             }
-            let pxLeftUntilTopViewpoint = elementOffsetTop - scrollTop;
-            let percentageLeft = pxLeftUntilTopViewpoint / windowHeight * 100;
+            var pxLeftUntilTopViewpoint = elementOffsetTop - scrollTop;
+            var percentageLeft = pxLeftUntilTopViewpoint / windowHeight * 100;
             return this._setElementState(state.value, percentageLeft, state);
         }
         return false;
-    }
-    private _pxElement(state: State): boolean {
+    };
+    ScrollimateDirective.prototype._pxElement = function (state) {
         //amount of element scrolled from bottom up in px
         if (this._isCurrentScreenSize(state.sizes)) {
-            let nativeElement = this.el.nativeElement;
-            let scrollTop = window.pageYOffset;
-            let windowHeight = window.innerHeight;
-            let viewpoint = windowHeight + scrollTop;
-            let offsetElement = nativeElement;
-            let elementOffsetTop = 0;
+            var nativeElement = this.el.nativeElement;
+            var scrollTop = window.pageYOffset;
+            var windowHeight = window.innerHeight;
+            var viewpoint = windowHeight + scrollTop;
+            var offsetElement = nativeElement;
+            var elementOffsetTop = 0;
             while (offsetElement) {
                 elementOffsetTop += offsetElement.offsetTop;
                 offsetElement = offsetElement.offsetParent;
             }
-            let breakpoint = elementOffsetTop + state.value;
+            var breakpoint = elementOffsetTop + state.value;
             return this._setElementState(viewpoint, breakpoint, state);
         }
         return false;
-    }
-    private _percentElement(state: State): boolean {
+    };
+    ScrollimateDirective.prototype._percentElement = function (state) {
         //amount of element scrolled from bottom up in percent
         if (this._isCurrentScreenSize(state.sizes)) {
-            let nativeElement = this.el.nativeElement;
-            let scrollTop = window.pageYOffset;
-            let windowHeight = window.innerHeight;
-            let offsetElement = nativeElement;
-            let elementOffsetTop = 0;
-            let viewpoint = windowHeight + scrollTop;
-            let elementHeight = nativeElement.offsetHeight;
+            var nativeElement = this.el.nativeElement;
+            var scrollTop = window.pageYOffset;
+            var windowHeight = window.innerHeight;
+            var offsetElement = nativeElement;
+            var elementOffsetTop = 0;
+            var viewpoint = windowHeight + scrollTop;
+            var elementHeight = nativeElement.offsetHeight;
             while (offsetElement) {
                 elementOffsetTop += offsetElement.offsetTop;
                 offsetElement = offsetElement.offsetParent;
             }
-            let pxOfElementScrolled = viewpoint - elementOffsetTop;
-            let percentageOfElementScrolled = pxOfElementScrolled / elementHeight * 100;
+            var pxOfElementScrolled = viewpoint - elementOffsetTop;
+            var percentageOfElementScrolled = pxOfElementScrolled / elementHeight * 100;
             return this._setElementState(percentageOfElementScrolled, state.value, state);
         }
         return false;
-    }
-    private _pxTotal(state: State): boolean {
+    };
+    ScrollimateDirective.prototype._pxTotal = function (state) {
         //amount of page scrolled in px
         if (this._isCurrentScreenSize(state.sizes)) {
-            let scrollTop = window.pageYOffset;
+            var scrollTop = window.pageYOffset;
             return this._setElementState(scrollTop, state.value, state);
         }
         return false;
-    }
-    private _percentTotal(state: State): boolean {
+    };
+    ScrollimateDirective.prototype._percentTotal = function (state) {
         //amount of page scrolled in percent
         if (this._isCurrentScreenSize(state.sizes)) {
-            let scrollTop = window.pageYOffset;
-            let windowHeight = window.innerHeight;
-            let bodyHeight = document.documentElement.scrollHeight;
-            let percentageScrolled = scrollTop / (bodyHeight - windowHeight) * 100;
+            var scrollTop = window.pageYOffset;
+            var windowHeight = window.innerHeight;
+            var bodyHeight = document.documentElement.scrollHeight;
+            var percentageScrolled = scrollTop / (bodyHeight - windowHeight) * 100;
             return this._setElementState(percentageScrolled, state.value, state);
         }
         return false;
-    }
-    private _default(state: State): boolean {
+    };
+    ScrollimateDirective.prototype._default = function (state) {
         //default state in case that no other states match
         if (typeof (state.method) !== 'undefined' && state.method === 'default') {
             //default state for specific size provided
@@ -229,17 +234,15 @@ export class ScrollimateDirective implements OnInit {
             }
         }
         return false;
-    }
-
-    private _emitOutput(state: State) {
+    };
+    ScrollimateDirective.prototype._emitOutput = function (state) {
         this.output.emit({
             state: state,
             options: this.options,
             elementRef: this.el
         });
-    }
-
-    private _emitOutputStats(state: State, hasToBeBiggerThan: number, hasToBeSmallerThan: number) {
+    };
+    ScrollimateDirective.prototype._emitOutputStats = function (state, hasToBeBiggerThan, hasToBeSmallerThan) {
         this.outputStats.emit({
             scrollTop: window.pageYOffset,
             state: state,
@@ -247,8 +250,8 @@ export class ScrollimateDirective implements OnInit {
             options: this.options,
             elementRef: this.el
         });
-    }
-    private _setClass(stateClass: string) {
+    };
+    ScrollimateDirective.prototype._setClass = function (stateClass) {
         if (typeof (stateClass) !== 'undefined' && this.classNameSetByScrollimate !== stateClass) {
             //class is provided and has to be applied to the element
             if (this.classNameSetByScrollimate !== '') {
@@ -266,13 +269,13 @@ export class ScrollimateDirective implements OnInit {
             }
             this.classNameSetByScrollimate = '';
         }
-    }
-    private _setElementState(hasToBeBiggerThan: number, hasToBeSmallerThan: number, state: State): boolean {
-        let scrollTop = window.pageYOffset;
-        let offsetElement = this.el.nativeElement;
-        let elementOffsetTop = 0;
-        let windowHeight = window.innerHeight;
-        let bodyHeight = document.documentElement.scrollHeight;
+    };
+    ScrollimateDirective.prototype._setElementState = function (hasToBeBiggerThan, hasToBeSmallerThan, state) {
+        var scrollTop = window.pageYOffset;
+        var offsetElement = this.el.nativeElement;
+        var elementOffsetTop = 0;
+        var windowHeight = window.innerHeight;
+        var bodyHeight = document.documentElement.scrollHeight;
         while (offsetElement) {
             elementOffsetTop += offsetElement.offsetTop;
             offsetElement = offsetElement.offsetParent;
@@ -307,18 +310,18 @@ export class ScrollimateDirective implements OnInit {
         else {
             return false;
         }
-    }
-    private _isCurrentScreenSize(screenSizes: string): boolean {
+    };
+    ScrollimateDirective.prototype._isCurrentScreenSize = function (screenSizes) {
         //screenSizes is something like sm-up / lg-down
         if (screenSizes === 'all') {
             return true;
         }
-        let currentScreenSize = this._getScreenSize();
-        let size = screenSizes.split('-')[0];
-        let direction = screenSizes.split('-')[1];
-        let possibleScreenSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
-        let positionInPossibleScreenSizesArray = -1;
-        for (let i = 0; i < possibleScreenSizes.length; i++) {
+        var currentScreenSize = this._getScreenSize();
+        var size = screenSizes.split('-')[0];
+        var direction = screenSizes.split('-')[1];
+        var possibleScreenSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
+        var positionInPossibleScreenSizesArray = -1;
+        for (var i = 0; i < possibleScreenSizes.length; i++) {
             if (possibleScreenSizes[i] === size) {
                 positionInPossibleScreenSizesArray = i;
                 i = possibleScreenSizes.length;
@@ -344,10 +347,10 @@ export class ScrollimateDirective implements OnInit {
             return true;
         }
         return false;
-    }
-    private _getScreenSize(): string {
-        let screenSize = 'xs';
-        let windowWidth = window.innerWidth;
+    };
+    ScrollimateDirective.prototype._getScreenSize = function () {
+        var screenSize = 'xs';
+        var windowWidth = window.innerWidth;
         switch (true) {
             case (windowWidth >= 1200):
                 screenSize = 'xl';
@@ -361,7 +364,29 @@ export class ScrollimateDirective implements OnInit {
             case (windowWidth >= 544):
                 screenSize = 'sm';
                 break;
-        };
+        }
+        ;
         return screenSize;
-    }
-}
+    };
+    __decorate([
+        core_1.Input('scrollimate'), 
+        __metadata('design:type', Object)
+    ], ScrollimateDirective.prototype, "options", void 0);
+    __decorate([
+        core_1.Output('scrollimate'), 
+        __metadata('design:type', Object)
+    ], ScrollimateDirective.prototype, "output", void 0);
+    __decorate([
+        core_1.Output('scrollimateAll'), 
+        __metadata('design:type', Object)
+    ], ScrollimateDirective.prototype, "outputStats", void 0);
+    ScrollimateDirective = __decorate([
+        core_1.Directive({
+            selector: '[scrollimate]'
+        }), 
+        __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer, ng2_scrollimate_service_1.ScrollimateService])
+    ], ScrollimateDirective);
+    return ScrollimateDirective;
+}());
+exports.ScrollimateDirective = ScrollimateDirective;
+//# sourceMappingURL=ng2-scrollimate.directive.js.map
