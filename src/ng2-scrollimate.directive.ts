@@ -140,7 +140,7 @@ export class ScrollimateDirective implements OnInit {
                 elementOffsetTop += offsetElement.offsetTop;
                 offsetElement = offsetElement.offsetParent;
             }
-            let breakpoint = elementOffsetTop + state.value;
+            let breakpoint = elementOffsetTop - state.value;
             return this._setElementState(scrollTop, breakpoint, state);
         }
         return false;
@@ -240,10 +240,14 @@ export class ScrollimateDirective implements OnInit {
     }
 
     private _emitOutputStats(state: State, hasToBeBiggerThan: number, hasToBeSmallerThan: number) {
+        let currentValue:number = null;
+        if(state.method!=='default') {
+            currentValue = state.method === 'pxLeft' || state.method === 'percentLeft' ? hasToBeSmallerThan : hasToBeBiggerThan;
+        }
         this.outputStats.emit({
             scrollTop: window.pageYOffset,
             state: state,
-            currentValue: state.method === 'pxLeft' ? hasToBeSmallerThan : hasToBeBiggerThan,
+            currentValue: currentValue,
             options: this.options,
             elementRef: this.el
         });

@@ -145,7 +145,7 @@ var ScrollimateDirective = (function () {
                 elementOffsetTop += offsetElement.offsetTop;
                 offsetElement = offsetElement.offsetParent;
             }
-            var breakpoint = elementOffsetTop + state.value;
+            var breakpoint = elementOffsetTop - state.value;
             return this._setElementState(scrollTop, breakpoint, state);
         }
         return false;
@@ -243,10 +243,14 @@ var ScrollimateDirective = (function () {
         });
     };
     ScrollimateDirective.prototype._emitOutputStats = function (state, hasToBeBiggerThan, hasToBeSmallerThan) {
+        var currentValue = null;
+        if (state.method !== 'default') {
+            currentValue = state.method === 'pxLeft' || state.method === 'percentLeft' ? hasToBeSmallerThan : hasToBeBiggerThan;
+        }
         this.outputStats.emit({
             scrollTop: window.pageYOffset,
             state: state,
-            currentValue: state.method === 'pxLeft' ? hasToBeSmallerThan : hasToBeBiggerThan,
+            currentValue: currentValue,
             options: this.options,
             elementRef: this.el
         });
