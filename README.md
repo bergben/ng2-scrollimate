@@ -2,7 +2,7 @@
 Pure angular2 directive to trigger animations on scrolling
 
 ## Demo
-TODO
+You can check out the demo [here](https://bergben.github.io/ng2-scrollimate/).
 
 ## Getting started
 
