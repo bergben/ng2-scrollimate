@@ -1,0 +1,34 @@
+{
+  "project": {
+    "version": "1.0.0-beta.14",
+    "name": "ng2-scrollimate-demo"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": "assets",
+      "index": "../index.html",
+      "main": "main.ts",
+      "tsconfig": "../tsconfig.json",
+      "prefix": "app",
+      "mobile": false,
+      "styles": [
+        "stylesheets/stylesheet.css",
+        "stylesheets/main.css"
+      ],
+      "scripts": [],
+      "environments": {
+        "source": "environments/environment.ts",
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "addons": [],
+  "packages": [],
+  "defaults": {
+    "styleExt": "css",
+    "prefixInterfaces": false
+  }
+}

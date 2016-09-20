@@ -1,0 +1,75 @@
+<div class="first-box">
+  <div class="col-lg-3 demo-box percentLeft" [@elementState]="scrollimateOptions.percentLeft.currentState" [scrollimate]="scrollimateOptions.percentLeft"
+    (scrollimateAll)="percentLeft($event)">
+    <h4>Method: percentLeft</h4>
+    This turns blue when 20% or less of the total viewport height is left between the element top and the viewport top. <br />
+    <hr />
+    currentValue: {{scrollimateOptions.percentLeft.currentValue | number}}%
+  </div>
+
+  <div class="col-lg-3 demo-box pxLeft" [@elementState]="scrollimateOptions.pxLeft.currentState" [scrollimate]="scrollimateOptions.pxLeft"
+    (scrollimateAll)="pxLeft($event)">
+    <h4>Method: pxLeft</h4>
+    This disappears when 200px or less are left from the top viewport. <br />
+    <hr />
+    currentValue: {{scrollimateOptions.pxLeft.currentValue | number}}px
+  </div>
+</div>
+
+<div class="col-lg-4 fixed">
+  Please note that for fixed elements it's important to set the option "setAtLastChance: false".
+  <br />
+  <div class="col-lg-5 demo-box pxTotal" [@elementState]="scrollimateOptions.pxTotal.currentState" [scrollimate]="scrollimateOptions.pxTotal"
+    (scrollimateAll)="pxTotal($event)">
+    <h4>Method: pxTotal</h4>
+    This turns green when a total of 500px of the page has been scrolled. <br />
+    <hr />
+    currentValue: {{scrollimateOptions.pxTotal.currentValue | number}}px
+  </div>
+
+  <div class="col-lg-5 demo-box percentTotal" [@elementState]="scrollimateOptions.percentTotal.currentState" [scrollimate]="scrollimateOptions.percentTotal"
+    (scrollimateAll)="percentTotal($event)">
+    <h4>Method: percentTotal</h4>
+    This text becomes bigger and bold when a total of 37.55% of the page has been scrolled. <br />
+    <hr />
+    currentValue: {{scrollimateOptions.percentTotal.currentValue | number}}%
+  </div>
+</div>
+
+<div class="second-box">
+  <div class="col-lg-3 demo-box pxElement" [@elementState]="scrollimateOptions.pxElement.currentState" [scrollimate]="scrollimateOptions.pxElement"
+    (scrollimateAll)="pxElement($event)">
+    <h4>Method: pxElement</h4>
+    This just appeared because the top of the element is 400px or more from the bottom viewport up and has the <b>css class "added-class"
+    added</b> (therefore the border turns red). <br />
+    <hr />
+    currentValue: {{scrollimateOptions.pxElement.currentValue | number}}px
+  </div>
+  <div class="col-lg-3 demo-box percentElement" [@elementState]="scrollimateOptions.percentElement.currentState" [scrollimate]="scrollimateOptions.percentElement"
+    (scrollimateAll)="percentElement($event)">
+    <h4>Method: percentElement</h4>
+      This rotates because it has the class "rotating" added once 40% of the element or more are in the viewport from bottom up. Once it reaches 200% of the element it will stop rotating again.
+     <br />
+     This is an example for <b>multiple states / animations on an elment.</b><br />
+     <br />
+    <hr />
+    currentValue: {{scrollimateOptions.percentElement.currentValue | number}}%
+  </div>
+</div>
+
+<div class="third-box">
+  <div class="col-lg-3 demo-box percentLeftLg" [@elementState]="scrollimateOptions.percentLeftLg.currentState" [scrollimate]="scrollimateOptions.percentLeftLg"
+    (scrollimateAll)="percentLeftLg($event)">
+    <h4>Responsive viewport sizes</h4>
+      This turns green once it is 40% of viewport height from top <b>only on display sizes lg and up.</b><br />
+      <hr />
+      currentValue: {{scrollimateOptions.percentLeftLg.currentValue | number}}%
+  </div>
+  <div class="col-lg-3 demo-box percentLeftMd" [@elementState]="scrollimateOptions.percentLeftMd.currentState" [scrollimate]="scrollimateOptions.percentLeftMd"
+    (scrollimateAll)="percentLeftMd($event)">
+    <h4>Responsive viewport sizes</h4>
+      This turns green once it is 40% of viewport height from top <b>only on display sizes md and down.</b><br />
+    <hr />
+    currentValue: {{scrollimateOptions.percentLeftMd.currentValue | number}}%
+  </div>
+</div>

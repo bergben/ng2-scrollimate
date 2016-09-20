@@ -1,0 +1,19 @@
+.inner{
+    width:80%;
+    margin:auto;
+    max-width:none;
+}
+#header_wrap .inner{
+    padding:0;
+}
+#project_tagline{
+    margin:0;
+}
+body{
+    background: #f2f2f2;
+    height: 350vh;
+    font-size: 1.1em;
+}
+#main_content_wrap{
+    border:0;
+}
