@@ -1,6 +1,6 @@
 {
   "name": "ng2-scrollimate",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Pure angular2 directive to trigger animations on scrolling",
   "main": "./ng2-scrollimate.js",
   "typings": "./ng2-scrollimate.d.ts",
