@@ -1,24 +1,29 @@
-import { Directive, ElementRef, Renderer, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectorRef, AfterViewInit, Directive, ElementRef, Renderer, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ScrollimateService } from './ng2-scrollimate.service';
 import { State, Options } from'./ng2-scrollimate.interface';
 
 @Directive({
     selector: '[scrollimate]'
 })
-export class ScrollimateDirective implements OnInit {
+export class ScrollimateDirective implements OnInit, AfterViewInit {
 
     @Input('scrollimate') options: Options;
     @Output('scrollimate') output = new EventEmitter();
     @Output('scrollimateAll') outputStats = new EventEmitter();
     classNameSetByScrollimate: string = '';
 
-    constructor(private el: ElementRef, private renderer: Renderer, private scrollimateService: ScrollimateService) {
+    constructor(private el: ElementRef, private renderer: Renderer,
+        private scrollimateService: ScrollimateService,
+        private _changeDetectionRef: ChangeDetectorRef) {
         //add listeneres for scroll and resize
         this.renderer.listenGlobal('window', 'scroll', (evt: Event) => { this._processEvent(); });
         this.renderer.listenGlobal('window', 'resize', (evt: Event) => { this._processEvent(); });
     }
     ngOnInit() {
         this._processEvent();
+    }
+    ngAfterViewInit(): void {
+        this._changeDetectionRef.detectChanges();
     }
 
 
@@ -240,9 +245,18 @@ export class ScrollimateDirective implements OnInit {
     }
 
     private _emitOutputStats(state: State, hasToBeBiggerThan: number, hasToBeSmallerThan: number) {
-        let currentValue:number = null;
-        if(state.method!=='default') {
-            currentValue = state.method === 'pxLeft' || state.method === 'percentLeft' ? hasToBeSmallerThan : hasToBeBiggerThan;
+        let currentValue: number = null;
+        if (state.method !== 'default') {
+            currentValue = hasToBeBiggerThan;
+            if (state.method === 'percentLeft') {
+                currentValue = hasToBeSmallerThan;
+            }
+            if (state.method === 'pxLeft') {
+                currentValue = hasToBeSmallerThan + state.value - hasToBeBiggerThan;
+            }
+            if (state.method === 'pxElement') {
+                currentValue = hasToBeBiggerThan - hasToBeSmallerThan;
+            }
         }
         this.outputStats.emit({
             scrollTop: window.pageYOffset,
