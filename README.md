@@ -317,5 +317,5 @@ $ npm run lint
 
 ## To-do
 
- - Boost performance using the [Intersection Observer Api](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
+ - Boost performance using the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
  - Comment code
