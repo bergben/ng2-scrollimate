@@ -18,7 +18,7 @@ export class ScrollimateDirective implements AfterViewInit {
         this.renderer.listenGlobal('window', 'resize', (evt: Event) => { this._processEvent(); });
     }
     ngAfterViewInit(): void {
-          setInterval(() => {
+          setTimeout(() => {
             this._processEvent();
           }, 0);
     }

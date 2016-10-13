@@ -25,7 +25,7 @@ var ScrollimateDirective = (function () {
     }
     ScrollimateDirective.prototype.ngAfterViewInit = function () {
         var _this = this;
-        setInterval(function () {
+        setTimeout(function () {
             _this._processEvent();
         }, 0);
     };
