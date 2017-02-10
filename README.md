@@ -1,3 +1,5 @@
+[![Join the chat at https://gitter.im/bergben/bergben](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bergben/bergben?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 # ng2-scrollimate
 Pure angular2 directive to trigger animations on scrolling
 
