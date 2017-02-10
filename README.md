@@ -1,3 +1,5 @@
+https://gitter.im/bergben/bergben?utm_source=share-link&utm_medium=link&utm_campaign=share-link
+
 # ng2-scrollimate
 Pure angular2 directive to trigger animations on scrolling
 
