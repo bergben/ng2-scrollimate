@@ -13,8 +13,11 @@ You can check out the demo [here](https://bergben.github.io/ng2-scrollimate/).
 $ npm install ng2-scrollimate --save
 ```
 
-### Angular 2 version
-This library is built to work with **Angular 2 rc.4 and newer releases**.
+Add web-animations-js if you haven't done so already to support all browsers (see https://angular.io/docs/ts/latest/guide/animations.html) 
+
+```bash
+$ npm install web-animations-js --save
+```
 
 ## Basic example
 
