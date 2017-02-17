@@ -1,23 +1,24 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "module": "es2015",
     "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "declaration": true,
-    "removeComments": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "listFiles": false,
-    "noLib": false
+    "sourceMap": true,
+    "outDir": "build",
+    "moduleResolution": "node",
+    "declaration": true,
+    "stripInternal": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@angular/core": ["node_modules/@angular/core"]
+    }
   },
-  "include": [
-    "./typings/index.d.ts",
-    "./ng2-scrollimate.ts"
+  "files": [
+    "ng2-scrollimate.ts"
   ],
-    "exclude": [
-        "node_modules"
-  ]
+  "angularCompilerOptions": {
+    "strictMetadataEmit": true
+  }
 }
