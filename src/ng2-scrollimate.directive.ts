@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, Renderer, AfterViewInit, Input, Output, EventEmitter, Inject, forwardRef } from '@angular/core';
 import { ScrollimateService } from './ng2-scrollimate.service';
 import { State, Options } from'./ng2-scrollimate.interface';
 
@@ -12,7 +12,9 @@ export class ScrollimateDirective implements AfterViewInit {
     @Output('scrollimateAll') outputStats = new EventEmitter();
     classNameSetByScrollimate: string = '';
 
-    constructor(private el: ElementRef, private renderer: Renderer, private scrollimateService: ScrollimateService) {
+    constructor(@Inject(forwardRef(() => ElementRef)) private el: ElementRef, 
+                @Inject(forwardRef(() => Renderer)) private renderer: Renderer, 
+                @Inject(forwardRef(() => ScrollimateService)) private scrollimateService: ScrollimateService) {
         //add listeneres for scroll and resize
         this.renderer.listenGlobal('window', 'scroll', (evt: Event) => { this._processEvent(); });
         this.renderer.listenGlobal('window', 'resize', (evt: Event) => { this._processEvent(); });
